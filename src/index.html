@@ -4,6 +4,7 @@
     </head>
     <body>
         <div class="container">
+            <h1>Doctor LookUp</h1>
             <form id="formID" action="">
                 <div class=form-group>
                     <label for="">Please enter your medical issue:</label><br>
@@ -18,12 +19,18 @@
                         <input type="text" class="form-control" id="doctorLastNameID">
                 </div>
                 <div class=form-group>
-                        <label for="">Please enter location to look for:(Location by default is "or-portland")</label><br>
+                        <label for="">Please enter location(city) to look for:(Location is set by default  "Portland")</label><br>
                         <input type="text" class="form-control" id="doctorLocationID">
                 </div>
-                <button type="submit" class="btn-info">Search</button>
+                <button type="submit" class="btn btn-success btn-lg btn-block">Search</button>
             </form>
+            <div class="row">
+                <div class="column">
+                    <div class="card" id="outputID">List of the doctors:</div>
+                </div>
+            </div>
         </div>
-        <div id="outputID"></div>
+        <!-- <div id="outputID"></div> -->
+       
     </body>
 </html>

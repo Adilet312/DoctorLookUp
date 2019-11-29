@@ -3,128 +3,105 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+import "./img/doctorPicture.jpg";
 
 $(document).ready(function(){
     $("#formID").submit(function(event){
         event.preventDefault();
-        //const location ="Portland";
         let medical_issue = $("#medicalIssueID").val();
         let first_name = $("#doctorFirstNameID").val();
         let last_name = $("#doctorLastNameID").val();
-        let doctor_Location = $("#doctorLocationID").val();
+        let city_location= $("#doctorLocationID").val();
         let listDoctors = new Class_DoctorLookUp();
-
-        // if location is empty string then location  will 'be wa-seattle' by default.
-        if(!doctor_Location){ doctor_Location = "or-portland";}
-        
-    
+        //if location is empty string then location  will 'Portland' by default.
+        if(!city_location){ city_location = "Portland";}
         if(medical_issue!==''  && first_name==='' && last_name==='')
         {
             let output="";
-            console.log(medical_issue);
-            (async()=>{
-                
-                const response = await listDoctors.getList_Doctors(medical_issue,doctor_Location);
-                for(let idx=0; idx<response.data.length; idx++)
+            (async()=>
+            {
+                const response = await listDoctors.getList_Doctors(medical_issue,city_location);
+                for(let idx=0; idx<response.length; idx++)
                     {
-
-                        output+="First name: "+response.data[idx].profile.first_name +
-                            "; Last name: "+response.data[idx].profile.last_name + 
-                            "; Address: ["+response.data[idx].practices[0].visit_address.street+
-                            ", "+response.data[idx].practices[0].visit_address.city+
-                            ", "+response.data[idx].practices[0].visit_address.state+
-                            ", "+response.data[idx].practices[0].visit_address.zip+
-                            "]; Website: "+response.data[idx].profile.image_url;
-                            if(response.data[idx].practices[0].accepts_new_patients===true)
+                        output+="First name: "+response[idx].profile.first_name +
+                        "; Last name: "+response[idx].profile.last_name + 
+                        "; Website: "+response[idx].profile.image_url+"; Address: [ ";
+                        if(response[idx].practices.length!==0)  
+                        {
+                            let index = 0;
+                            while(index < response[idx].practices.length)
                             {
-                                output+="; Accepting a new patients: YES"+"<br><br>";
+                                if(response[idx].practices[index].visit_address.city==city_location)
+                                {
+                                    output+=response[idx].practices[index].visit_address.street + ", " +
+                                    response[idx].practices[index].visit_address.city + ", " +
+                                    response[idx].practices[index].visit_address.state + ", " +
+                                    response[idx].practices[index].visit_address.zip;
+                                    if(response[idx].practices[index].accepts_new_patients===true)
+                                    { output+=" ]; Accepting a new patients: YES"+"<br><br>";}
+                                    else{ output+=" ]; Accepting a new patients: NO"+"<br><br>";}
+                                    index = response[idx].practices.length;
+                                }
+                                index++;
                             }
-                            else
-                            {
-                                output+="; Accepting a new patients: NO"+"<br><br>";
-                            }
-                        
-                    }
-                    $("#outputID").html(output);
-
+                        }
+                        else 
+                        {output+=" There is no an address section ]"+"<br><br>";}
+                     }
+                     if(!output){ output+="<br>Response status is "+listDoctors.getStatus()+" ok. There is no such a doctor in your area.";$("#outputID").html(output);}
+                    else{ output+="<br>Response status is "+listDoctors.getStatus()+" ok."; $("#outputID").html(output);}
             })();
-        }
-        
-        else if(medical_issue==='' && first_name!=='' && last_name!=='')
-        {
-        
+       }
+       else if(medical_issue==='' && first_name!=='' && last_name!=='')
+       {
             let results="";
             (async()=>{
-                
-                const response = await listDoctors.getDoctorsByName(first_name,last_name,doctor_Location);
-                for(let idx=0; idx<response.data.length; idx++)
+                const response = await listDoctors.getDoctorsByName(first_name,last_name,city_location);
+                for(let idx=0; idx<response.length; idx++)
                     {
-                        if(response.data[idx].profile.last_name===last_name)
+                        results+="First name: "+response[idx].profile.first_name +
+                        "; Last name: "+response[idx].profile.last_name + 
+                        "; Website: "+response[idx].profile.image_url+"; Address: [ ";
+                        if(response[idx].practices.length!==0)  
                         {
-
-                        results+="First name: "+response.data[idx].profile.first_name +
-                            "; Last name: "+response.data[idx].profile.last_name + 
-                            "; Address: ["+response.data[idx].practices[0].visit_address.street+
-                            ", "+response.data[idx].practices[0].visit_address.city+
-                            ", "+response.data[idx].practices[0].visit_address.state+
-                            ", "+response.data[idx].practices[0].visit_address.zip+
-                            "]; Website: "+response.data[idx].profile.image_url;
-                            if(response.data[idx].practices[0].accepts_new_patients===true)
+                            let index = 0;
+                            while(index<response[idx].practices.length)
                             {
-                                results+="; Accepting a new patients: YES"+"<br><br>";
-                                
+                                if(response[idx].practices[index].visit_address.city==city_location)
+                                {
+                                    results+=response[idx].practices[index].visit_address.street + ", " +
+                                    response[idx].practices[index].visit_address.city + ", " +
+                                    response[idx].practices[index].visit_address.state + ", " +
+                                    response[idx].practices[index].visit_address.zip;
+                                     if(response[idx].practices[index].accepts_new_patients===true)
+                                    {results+=" ]; Accepting a new patients: YES"+"<br><br>";}
+                                    else{   results+=" ]; Accepting a new patients: NO"+"<br><br>"; }
+                                    index = response[idx].practices.length;
+                                }
+                                index++;
                             }
-                            else
-                            {
-                                results+="; Accepting a new patients: NO"+"<br><br>";
-                            }
-                            
                         }
-                        
-                    }
-                    $("#outputID").html(results);
+                        else 
+                        {   results+=" There is no address section ]"+"<br><br>";}
+                     }
+                     if(!results)
+                     { results+="<br>Response status is "+listDoctors.getStatus()+" ok. There is no such a doctor in your area."; $("#outputID").html(results); }
+                     else{ results+="<br>Response status is "+listDoctors.getStatus()+" ok."; $("#outputID").html(results);}
             })();
             
         }
         else if(medical_issue==='' && first_name==='' && last_name==='')
-        {
-            let  errorMassage = "Please enter first, last name, and location or sypmtom and location to get list of doctors! ";
-            $("#outputID").html(errorMassage);
-        }
+        { let  errorMassage = "Please enter first, last name, and location or sypmtom and location to get list of doctors! "; $("#outputID").html(errorMassage);}
         else if((medical_issue===''&& first_name==='')||(medical_issue===''&& last_name===''))
-        {
-            let  errorMassage = "";
-            if(last_name)
-            {
-                errorMassage = "Please enter first name!";
-            }
-            else
-            {
-                errorMassage = "Please enter last name!";
-            }
-            $("#outputID").html(errorMassage);
-        }
+        { let  errorMassage = ""; if(last_name){errorMassage = "Please enter first name!";}else{ errorMassage = "Please enter last name!";}$("#outputID").html(errorMassage);}
         else if(medical_issue!=='' && first_name!=='' && last_name==='')
-        {
-            let  errorMassage = "Please choose searching doctors by symptom or by first and last name!";
-            $("#outputID").html(errorMassage);
-
-        }
+        { let  errorMassage = "Please choose searching doctors by symptom or by first and last name!"; $("#outputID").html(errorMassage);}
         else if(medical_issue!=='' && last_name!=='' && first_name==='')
-        {
-            let  errorMassage = "Please choose searching doctors by symptom or by first and last name!";
-            $("#outputID").html(errorMassage);
-
-        }
+        {let  errorMassage = "Please choose searching doctors by symptom or by first and last name!";$("#outputID").html(errorMassage);}
         else if(medical_issue!=='' && first_name!=='' && last_name!=='')
-        {
-            let  errorMassage = "Please choose searching doctors by symptom or searching specific doctor by first and last name!";
-            $("#outputID").html(errorMassage); 
-        }
+        {let  errorMassage = "Please choose searching doctors by symptom or searching specific doctor by first and last name!";$("#outputID").html(errorMassage); }
        
-        
-       
-
-        
     });
 });
+
+
