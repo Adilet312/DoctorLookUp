@@ -6,7 +6,7 @@
 ##### By _**Adilet Momunaliev**_
 &nbsp;
 ## **Specs**
-## *The program returns 10 doctors based on "rush(medical issue)" in the query.But some doctors have multiple an addresses.So,our search will be based on medical issue and name of the city.
+### The program returns 10 doctors based on "rush(medical issue)" in the query.But some doctors have multiple an addresses.So,our search will be based on medical issue and name of the city.
 * _The program will accept a rush (symptom) and city Destin and returns one doctor(David Zielinski) with properties._
 * _The program will accept a rush (symptom) and city Chicago and returns three doctors(Carol Burke,Melissa Dennis,Nancy Church) with properties._
 * _The program will accept a rush (symptom) and city Aurora and returns one doctor(Kevin Lue) with properties._
