@@ -21,6 +21,7 @@ $(document).ready(function(){
             (async()=>
             {
                 const response = await listDoctors.getList_Doctors(medical_issue,city_location);
+                console.log(response);
                 for(let idx=0; idx<response.length; idx++)
                     {
                         output+="First name: "+response[idx].profile.first_name +
@@ -57,6 +58,7 @@ $(document).ready(function(){
             let results="";
             (async()=>{
                 const response = await listDoctors.getDoctorsByName(first_name,last_name,city_location);
+                console.log(response);
                 for(let idx=0; idx<response.length; idx++)
                     {
                         results+="First name: "+response[idx].profile.first_name +
