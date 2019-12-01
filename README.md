@@ -22,7 +22,7 @@
 * _The program will accept a rush (symptom) and city Irving and returns one doctor(Michael Payne) with properties._
 * _The program will accept a rush (symptom) and city Fresno and returns one doctor(Michael Payne) with properties._
 * _The program will accept a rush (symptom) and city Tulsa and returns one doctor(Michael Payne) with properties._
-## *The program returns doctors based on first name,last name,and city .
+### The program returns doctors based on first name,last name,and city .
 * _The program will accept a first name:Xavier,last name:Preciado, and Portland  and returns his properties._
 * _The program will accept a first name:Lyn,last name:Jacobs, and city can be Cornelius or Forest Grove and returns his properties._
 
