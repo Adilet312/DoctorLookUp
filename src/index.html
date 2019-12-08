@@ -4,33 +4,35 @@
     </head>
     <body>
         <div class="container">
-            <h1>Doctor LookUp</h1>
-            <form id="formID" action="">
-                <div class=form-group>
-                    <label for="">Please enter your medical issue:</label><br>
-                    <input type="text" class="form-control" id="medicalIssueID">
-                </div>
-                <div class=form-group>
-                        <label for="">Please enter first name of the doctor:</label><br>
-                        <input type="text" class="form-control" id="doctorFirstNameID">
-                </div>
-                <div class=form-group>
-                        <label for="">Please enter last name of the doctor:</label><br>
-                        <input type="text" class="form-control" id="doctorLastNameID">
-                </div>
-                <div class=form-group>
-                        <label for="">Please enter location(city) to look for:(Location is set by default  "Portland")</label><br>
-                        <input type="text" class="form-control" id="doctorLocationID">
-                </div>
-                <button type="submit" class="btn btn-success btn-lg btn-block">Search</button>
-            </form>
-            <div class="row">
-                <div class="column">
+            <div class="box" id="box">
+                <h1>Doctor LookUp</h1>
+                <form id="formID" action="">
+                    <div class=form-group>
+                        <label for="">Please enter your medical issue:</label><br>
+                        <input type="text" class="form-control" id="medicalIssueID">
+                    </div>
+                    <div class=form-group>
+                            <label for="">Please enter first name of the doctor:</label><br>
+                            <input type="text" class="form-control" id="doctorFirstNameID">
+                    </div>
+                    <div class=form-group>
+                            <label for="">Please enter last name of the doctor:</label><br>
+                            <input type="text" class="form-control" id="doctorLastNameID">
+                    </div>
+                    <div class=form-group>
+                            <label for="">Please enter location(city) to look for:(Location is set by default  "Portland")</label><br>
+                            <input type="text" class="form-control" id="doctorLocationID">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Search</button>
+                </form>
+                <div class="row">
+                 <div class="column">
                     <div class="card" id="outputID">List of the doctors:</div>
-                </div>
+                 </div>
+            </div>
             </div>
         </div>
-        <!-- <div id="outputID"></div> -->
+        <div id="outputID2"></div>
        
     </body>
 </html>

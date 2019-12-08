@@ -25,15 +25,15 @@ export class Class_DoctorLookUp
                             size++;
                             /**Once we find doctor with specific  city then index will be initilize to max length in order to go out of the loop.  */
                             index = json_format_Response.data[idx].practices.length;
+                            }
+                            index++;
                         }
-                    index++;
                     }
                 }
-            }
             return listDoctors;
         }
         catch(error){
-            let errorMassage = "There was an error handling your request:"+response.message;
+            let errorMassage = response;
             return errorMassage;
         }
     }
@@ -42,8 +42,9 @@ export class Class_DoctorLookUp
     {
         let listDoctors=[];
         let size = 0;
+        let response;
         try{
-            let response = await fetch(`https://api.betterdoctor.com/2016-03-01/doctors?first_name=${first_name}&last_name=${last_name}&user_key=${process.env.API_KEY}`);
+            response = await fetch(`https://api.betterdoctor.com/2016-03-01/doctors?first_name=${first_name}&last_name=${last_name}&user_key=${process.env.API_KEY}`);
             this.responseStatus = response.status;
             let json_format_Response = await response.json();
             for(let idx=0; idx < json_format_Response.data.length; idx++){
@@ -71,10 +72,11 @@ export class Class_DoctorLookUp
             return listDoctors;
         }
         catch(error){
-            let errorMassage = "There was an error handling your request:"+error.message;
+            let errorMassage = response;//"There was an error handling your request:"+response.massage;
             return errorMassage;
         }
     }
+    // The method returns status our request which comes from BetterDoctorAPI when we send request.
     getStatus(){
         return this.responseStatus;
     }

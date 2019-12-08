@@ -21,7 +21,6 @@ $(document).ready(function(){
             (async()=>
             {
                 const response = await listDoctors.getList_Doctors(medical_issue,city_location);
-                console.log(response);
                 for(let idx=0; idx<response.length; idx++)
                     {
                         output+="First name: "+response[idx].profile.first_name +
@@ -49,8 +48,9 @@ $(document).ready(function(){
                         else 
                         {output+=" There is no an address section ]"+"<br><br>";}
                      }
-                     if(!output){ output+="<br>Response status is "+listDoctors.getStatus()+" ok. There is no such a doctor in your area.";$("#outputID").html(output);}
-                    else{ output+="<br>Response status is "+listDoctors.getStatus()+" ok."; $("#outputID").html(output);}
+                     if((!output) && (listDoctors.getStatus()==200)){ output+="<br>Response status is "+listDoctors.getStatus()+" ok. There is no such a doctor in your area.";$("#outputID").html(output);}
+                     else if((!output) && (listDoctors.getStatus()!=200)){output+="<br>Response status is "+listDoctors.getStatus()+" error.";$("#outputID").html(output);}
+                     else{ output+="<br>Response status is "+listDoctors.getStatus()+" ok."; $("#outputID").html(output);}
             })();
        }
        else if(medical_issue==='' && first_name!=='' && last_name!=='')
@@ -58,7 +58,6 @@ $(document).ready(function(){
             let results="";
             (async()=>{
                 const response = await listDoctors.getDoctorsByName(first_name,last_name,city_location);
-                console.log(response);
                 for(let idx=0; idx<response.length; idx++)
                     {
                         results+="First name: "+response[idx].profile.first_name +
@@ -86,8 +85,8 @@ $(document).ready(function(){
                         else 
                         {   results+=" There is no address section ]"+"<br><br>";}
                      }
-                     if(!results)
-                     { results+="<br>Response status is "+listDoctors.getStatus()+" ok. There is no such a doctor in your area."; $("#outputID").html(results); }
+                     if((!results) && (listDoctors.getStatus()==200)){ results+="<br>Response status is "+listDoctors.getStatus()+" ok. There is no such a doctor in your area.";$("#outputID").html(output);}
+                     else if((!results) && (listDoctors.getStatus()!=200)){results+="<br>Response status is "+listDoctors.getStatus()+" error.";$("#outputID").html(results);}
                      else{ results+="<br>Response status is "+listDoctors.getStatus()+" ok."; $("#outputID").html(results);}
             })();
             
